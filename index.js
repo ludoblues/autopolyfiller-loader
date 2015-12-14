@@ -20,6 +20,10 @@ module.exports = function(source, sourceMap) {
 
         // append require()s with absoluted paths to neccessary polyfills
         polyfills.forEach(function(polyfill) {
+            if (polyfill !== 'Function.prototype.bind') return ;
+
+            polyfill = polyfill.replace(/\./g,'/');
+          
             inject += 'require(' + JSON.stringify(require.resolve('polyfill-service/polyfills/' + polyfill + '/polyfill')) + ');';
             inject += '\n';
         });
